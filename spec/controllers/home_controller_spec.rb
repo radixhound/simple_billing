@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe HomesController do
+describe HomeController do
   fixtures :all
   render_views
 

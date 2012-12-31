@@ -23,7 +23,7 @@ end
 gem 'jquery-rails'
 gem 'haml'
 # To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'bcrypt-ruby', '~> 3.0.0', :require => 'bcrypt'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
@@ -43,6 +43,7 @@ group :development, :test do
   gem 'factory_girl_rails'
 end
 
-gem 'cucumber-rails', :group => :test
-
-gem "mocha", :group => :test
+group :test do
+  gem 'cucumber-rails', :require => false
+  gem "mocha", :require => false
+end
