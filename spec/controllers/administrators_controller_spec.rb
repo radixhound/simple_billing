@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe AdminUsersController do
+describe Admin::AdministratorsController do
   fixtures :all
   render_views
 
@@ -10,16 +10,16 @@ describe AdminUsersController do
   end
 
   it "create action should render new template when model is invalid" do
-    AdminUser.any_instance.stubs(:valid?).returns(false)
+    Administrator.any_instance.stubs(:valid?).returns(false)
     post :create
     response.should render_template(:new)
   end
 
   it "create action should redirect when model is valid" do
-    AdminUser.any_instance.stubs(:valid?).returns(true)
+    Administrator.any_instance.stubs(:valid?).returns(true)
     post :create
     response.should redirect_to(root_url)
-    session['admin_user_id'].should == assigns['admin_user'].id
+    session['administrator_id'].should == assigns['administrator'].id
   end
 
   it "edit action should redirect when not logged in" do
@@ -28,7 +28,8 @@ describe AdminUsersController do
   end
 
   it "edit action should render edit template" do
-    @controller.stubs(:current_admin_user).returns(AdminUser.first)
+    @controller.stubs(:current_administrator).returns(Administrator.first)
+    debugger
     get :edit, :id => "ignored"
     response.should render_template(:edit)
   end
@@ -38,16 +39,16 @@ describe AdminUsersController do
     response.should redirect_to(login_url)
   end
 
-  it "update action should render edit template when admin_user is invalid" do
-    @controller.stubs(:current_admin_user).returns(AdminUser.first)
-    AdminUser.any_instance.stubs(:valid?).returns(false)
+  it "update action should render edit template when administrator is invalid" do
+    @controller.stubs(:current_administrator).returns(Administrator.first)
+    Administrator.any_instance.stubs(:valid?).returns(false)
     put :update, :id => "ignored"
     response.should render_template(:edit)
   end
 
-  it "update action should redirect when admin_user is valid" do
-    @controller.stubs(:current_admin_user).returns(AdminUser.first)
-    AdminUser.any_instance.stubs(:valid?).returns(true)
+  it "update action should redirect when administrator is valid" do
+    @controller.stubs(:current_administrator).returns(Administrator.first)
+    Administrator.any_instance.stubs(:valid?).returns(true)
     put :update, :id => "ignored"
     response.should redirect_to(root_url)
   end

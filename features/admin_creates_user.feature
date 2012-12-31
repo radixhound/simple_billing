@@ -3,6 +3,9 @@ Feature: Add users
     As an administrator
     I want to add them to the system
 
+    Background: 
+        Given there is an admin user "Admin"
+        
     Scenario: Add a user
         Given there are no users in the system
         When I add "Hyde Park Distribution" 

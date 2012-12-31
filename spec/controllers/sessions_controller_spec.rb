@@ -4,9 +4,13 @@ describe SessionsController do
   fixtures :all
   render_views
 
-  it "new action should render new template" do
-    get :new
-    response.should render_template(:new)
+  describe '#new' do
+    it "new action should render new template" do
+      get :new
+      response.should render_template(:new)
+    end
+
+    it "sets the administrator session to nil" 
   end
 
   it "create action should render new template when authentication is invalid" do

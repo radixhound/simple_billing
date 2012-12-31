@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe AdminSessionsControllersController do
+describe AdministratorSessionsController do
   fixtures :all
   render_views
 
@@ -9,17 +9,19 @@ describe AdminSessionsControllersController do
     response.should render_template(:new)
   end
 
+  it "sets the user session to nil"
+
   it "create action should render new template when authentication is invalid" do
-    AdminUser.stubs(:authenticate).returns(nil)
+    Administrator.stubs(:authenticate).returns(nil)
     post :create
     response.should render_template(:new)
-    session['admin_user_id'].should be_nil
+    session['administrator_id'].should be_nil
   end
 
   it "create action should redirect when authentication is valid" do
-    AdminUser.stubs(:authenticate).returns(AdminUser.first)
+    Administrator.stubs(:authenticate).returns(Administrator.first)
     post :create
     response.should redirect_to(root_url)
-    session['admin_user_id'].should == AdminUser.first.id
+    session['administrator_id'].should == Administrator.first.id
   end
 end

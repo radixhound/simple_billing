@@ -1,4 +1,4 @@
-class AdminUser < ActiveRecord::Base
+class Administrator < ActiveRecord::Base
   # new columns need to be added here to be writable through mass assignment
   attr_accessible :username, :email, :password, :password_confirmation
 
@@ -15,8 +15,8 @@ class AdminUser < ActiveRecord::Base
 
   # login can be either username or email address
   def self.authenticate(login, pass)
-    admin_user = find_by_username(login) || find_by_email(login)
-    return admin_user if admin_user && admin_user.password_hash == admin_user.encrypt_password(pass)
+    administrator = find_by_username(login) || find_by_email(login)
+    return administrator if administrator && administrator.password_hash == administrator.encrypt_password(pass)
   end
 
   def encrypt_password(pass)

@@ -8,22 +8,22 @@ SimpleBilling::Application.routes.draw do
 
   match 'login' => 'sessions#new', :as => :login
 
+  resources :administrator_sessions
+
   resources :sessions
 
   resources :users
 
   namespace :admin do
-    resources :admin_users
+    resources :users
+    resources :administrators
 
-    match 'admin_user/edit' => 'admin_users#edit', :as => :edit_current_admin_user
-    
-    match 'logout' => 'admin_sessions#destroy', :as => :logout
+    match 'administrator/edit' => 'administrators#edit', :as => :edit_current_administrator
 
-    match 'login' => 'admin_sessions#new', :as => :login
+    match 'logout' => 'administrator_sessions#destroy', :as => :logout
+
+    match 'login' => 'administrator_sessions#new', :as => :login
   end
-
-  resources :admin_sessions
-
 
   root :to => 'home#index'
   # The priority is based upon order of creation:
