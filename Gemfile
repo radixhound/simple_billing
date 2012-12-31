@@ -43,6 +43,8 @@ group :development, :test do
   gem 'factory_girl_rails'
 end
 
-gem 'cucumber-rails', :group => :test
-
-gem "mocha", :group => :test
+group :test do
+  gem 'cucumber-rails'
+  gem 'database_cleaner'
+  gem "mocha"
+end
