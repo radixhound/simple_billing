@@ -41,5 +41,6 @@ group :development, :test do
   gem 'nifty-generators'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
-  gem 'cucumber-rails'
 end
+
+gem 'cucumber-rails', :group => :test
