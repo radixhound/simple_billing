@@ -40,10 +40,19 @@ When /^I destroy "(.*?)"$/ do |user_name|
   user_row_id = "#user_#{@user.id}"
   visit admin_root_path
   within(:css, user_row_id){ click_link("Destroy") }
-  save_and_open_page
 end
 
 Then /^I should not see "(.*?)" on the Admin Dashboard$/ do |user_name|
   page.should_not have_content(user_name)
   page.should have_content('Admin Dashboard')
+end
+
+When /^I edit "(.*?)" to have:$/ do |user_name, table|
+  # table is a Cucumber::Ast::Table
+  user_row_id = "#user_#{@user.id}"
+  visit admin_root_path
+  within(:css, user_row_id) { click_link("Edit") }
+  fill_in("user_username", with: table.rows_hash['username'])
+  fill_in("user_email", with: table.rows_hash['email'])
+  click_button("Update User")
 end

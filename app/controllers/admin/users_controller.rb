@@ -24,7 +24,7 @@ class Admin::UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(params[:user])
-      redirect_to [:admin, @user], :notice  => "Successfully updated user."
+      redirect_to admin_root_url, :notice  => "Successfully updated user."
     else
       render :action => 'edit'
     end
