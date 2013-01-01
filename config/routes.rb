@@ -1,4 +1,6 @@
 SimpleBilling::Application.routes.draw do
+  namespace(:admin){ resources :users }
+
   match 'user/edit' => 'users#edit', :as => :edit_current_user
 
   match 'signup' => 'users#new', :as => :signup

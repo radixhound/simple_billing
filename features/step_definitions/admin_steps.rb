@@ -16,11 +16,15 @@ end
 
 When /^I add "(.*?)"$/ do |user_name|
   @new_user = FactoryGirl.build(:user, username: user_name)
-  visit admin_user_path
-  click_button("Add User")
-  fill_in("username", with: @new_user.username )
+  visit admin_users_path
+  click_link("Add User")
+  fill_in("user_username", with: @new_user.username )
+  fill_in("user_email", with: @new_user.email )
+  fill_in("user_password", with: @new_user.password )
+  fill_in("user_password_confirmation", with: @new_user.password )
+  click_button("Create User")
 end
 
-Then /^I should see "(.*?)" in the users list$/ do |arg1|
-  pending # express the regexp above with the code you wish you had
+Then /^I should see "(.*?)" in the users list$/ do |user_name|
+  page.has_content?(user_name)
 end
