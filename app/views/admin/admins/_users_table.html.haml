@@ -3,7 +3,7 @@
     %th Name
     %th Actions
   - for user in users
-    %tr
+    %tr{id: "user_#{user.id}"}
       %td= user.username
       %td
         = link_to 'Show', [:admin, user]

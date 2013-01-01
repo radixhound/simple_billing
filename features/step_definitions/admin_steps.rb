@@ -1,13 +1,17 @@
 Given /^there is an admin user "(.*?)"$/ do |admin_user_name|
-  @user = FactoryGirl.create(:admin_user, username: admin_user_name)
+  @administrator = FactoryGirl.create(:admin_user, username: admin_user_name)
 end
 
 Given /^I am logged in as an admin user$/ do
   step 'there is an admin user "admin"'
   visit new_session_path
-  fill_in("login", :with => @user.username)
-  fill_in("password", :with => @user.password)
+  fill_in("login", :with => @administrator.username)
+  fill_in("password", :with => @administrator.password)
   click_button("Log in")
+end
+
+Given /^there is a user "(.*?)"$/ do |user_name|
+  @user = FactoryGirl.create(:user, username: user_name)
 end
 
 Given /^there are no users in the system$/ do
@@ -28,5 +32,18 @@ end
 
 Then /^I should see "(.*?)" on the Admin Dashboard$/ do |user_name|
   page.should have_content(user_name)
+  page.should have_content('Admin Dashboard')
+end
+
+
+When /^I destroy "(.*?)"$/ do |user_name|
+  user_row_id = "#user_#{@user.id}"
+  visit admin_root_path
+  within(:css, user_row_id){ click_link("Destroy") }
+  save_and_open_page
+end
+
+Then /^I should not see "(.*?)" on the Admin Dashboard$/ do |user_name|
+  page.should_not have_content(user_name)
   page.should have_content('Admin Dashboard')
 end
