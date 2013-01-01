@@ -35,6 +35,12 @@ module ControllerAuthentication
     end
   end
 
+  def admins_only
+    unless current_user.try(:is_admin?)
+      redirect_to root_url, :alert => "You must be an administrator to view this page."
+    end
+  end
+
   def redirect_to_target_or_default(default, *args)
     redirect_to(session[:return_to] || default, *args)
     session[:return_to] = nil

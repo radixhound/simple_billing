@@ -1,0 +1,32 @@
+!!!
+%html
+
+  %head
+    %title
+      = yield(:title) || "Untitled"
+    %meta{"http-equiv"=>"Content-Type", :content=>"text/html; charset=utf-8"}/
+    = stylesheet_link_tag "application"
+    = javascript_include_tag :application
+    = csrf_meta_tag
+    = yield(:head)
+
+  %body
+    %header
+      - if logged_in?
+        Welcome #{current_user.username}
+        = link_to "Log out", logout_path
+      - else
+        = link_to "Sign up", signup_path 
+        or
+        = link_to "log in", login_path 
+ 
+    #container
+      = render partial: "admin/shared/navigation"
+
+      - flash.each do |name, msg|
+        = content_tag :div, msg, :id => "flash_#{name}"
+
+      - if show_title?
+        %h1.main_title= yield(:title)
+
+      = yield
