@@ -16,15 +16,17 @@ end
 
 When /^I add "(.*?)"$/ do |user_name|
   @new_user = FactoryGirl.build(:user, username: user_name)
-  visit admin_users_path
+  visit admin_root_path
   click_link("Add User")
   fill_in("user_username", with: @new_user.username )
   fill_in("user_email", with: @new_user.email )
   fill_in("user_password", with: @new_user.password )
   fill_in("user_password_confirmation", with: @new_user.password )
   click_button("Create User")
+  # save_and_open_page
 end
 
-Then /^I should see "(.*?)" in the users list$/ do |user_name|
-  page.has_content?(user_name)
+Then /^I should see "(.*?)" on the Admin Dashboard$/ do |user_name|
+  page.should have_content(user_name)
+  page.should have_content('Admin Dashboard')
 end

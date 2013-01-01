@@ -41,6 +41,8 @@ group :development, :test do
   gem 'nifty-generators'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  gem 'debugger'
+  gem 'launchy'
 end
 
 group :test do

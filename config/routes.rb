@@ -1,5 +1,10 @@
 SimpleBilling::Application.routes.draw do
-  namespace(:admin){ resources :users }
+
+  namespace(:admin){ 
+    root to: 'admins#index'
+
+    resources :users 
+  }
 
   match 'user/edit' => 'users#edit', :as => :edit_current_user
 

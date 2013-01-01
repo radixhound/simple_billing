@@ -1,0 +1,7 @@
+- title "Admin Dashboard"
+
+= render partial: 'users_table', locals: { users: @admins }
+
+= render partial: 'users_table', locals: { users: @clients }
+
+%p= link_to "Add User", new_admin_user_path

@@ -9,4 +9,4 @@ Feature: Add users
     Scenario: Add a user
         Given there are no users in the system
         When I add "Hyde Park Distribution" 
-        Then I should see "Hyde Park Distribution" in the users list
+        Then I should see "Hyde Park Distribution" on the Admin Dashboard

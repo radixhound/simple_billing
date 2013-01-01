@@ -1,7 +1,4 @@
 class Admin::UsersController < ApplicationController
-  def index
-    @users = User.all
-  end
 
   def show
     @user = User.find(params[:id])
@@ -14,7 +11,7 @@ class Admin::UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     if @user.save
-      redirect_to [:admin, @user], :notice => "Successfully created user."
+      redirect_to admin_root_url, :notice => "Successfully created user."
     else
       render :action => 'new'
     end
@@ -36,6 +33,6 @@ class Admin::UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    redirect_to admin_users_url, :notice => "Successfully destroyed user."
+    redirect_to admin_root_url, :notice => "Successfully destroyed user."
   end
 end
