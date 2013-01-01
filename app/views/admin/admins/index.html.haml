@@ -1,6 +1,10 @@
 - title "Admin Dashboard"
 
+%h2 Admins:
+
 = render partial: 'users_table', locals: { users: @admins }
+
+%h2 Users:
 
 = render partial: 'users_table', locals: { users: @clients }
 
