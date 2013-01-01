@@ -1,4 +1,7 @@
 %header
   %nav
-    %ul
-      %li= link_to "Dashboard", admin_root_url
+    #user_status.right_box
+      Welcome #{current_user.username}
+      = link_to "Log out", logout_path
+    %ul.navigation_bar
+      %li.navigation_item= link_to "Dashboard", admin_root_url
