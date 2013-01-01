@@ -15,7 +15,7 @@ Given /^there is a user "(.*?)"$/ do |user_name|
 end
 
 Given /^there are no users in the system$/ do
-  User.destroy_all
+  User.clients.destroy_all
 end
 
 When /^I add "(.*?)"$/ do |user_name|
@@ -55,4 +55,13 @@ When /^I edit "(.*?)" to have:$/ do |user_name, table|
   fill_in("user_username", with: table.rows_hash['username'])
   fill_in("user_email", with: table.rows_hash['email'])
   click_button("Update User")
+end
+
+Given /^I am on the Admin Dashboard$/ do
+  visit admin_root_path
+end
+
+Then /^I should not be able to destroy myself$/ do
+  user_row_id = "#user_#{@administrator.id}"
+  find(user_row_id).should_not have_content("Destroy")
 end
