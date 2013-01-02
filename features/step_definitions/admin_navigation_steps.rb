@@ -11,18 +11,6 @@ Then /^I should be required to login$/ do
   page.should have_content('You must first log in or sign up before accessing this page')
 end
 
-Given /^I am logged in as a user$/ do
-  step 'there is a user "Bob"'
-  visit new_session_path
-  fill_in("login", :with => @user.username)
-  fill_in("password", :with => @user.password)
-  click_button("Log in")
-end
-
-Then /^I should be returned my user page$/ do  
-  pending
-end
-
 Then /^I should be on the Admin Dashboard page$/ do
   find("h1.main_title").should have_content('Admin Dashboard') #brittle -> what if we have a link here?
 end

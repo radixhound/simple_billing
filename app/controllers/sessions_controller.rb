@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
     if user.is_admin?
       admin_root_url
     else
-      root_url
+      user_path(user)
     end
   end
 end

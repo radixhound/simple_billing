@@ -11,7 +11,7 @@ Feature: Admin area navigation
     Scenario: Admin area is inaccessible to users
         Given I am logged in as a user
         When I visit the admin area
-        Then I should be returned my user page
+        Then I should be on my User page
 
     Scenario: Login brings me to admin dashboard
         When I log in as an admin user

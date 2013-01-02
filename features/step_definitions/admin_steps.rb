@@ -2,18 +2,6 @@ Given /^there is an admin user "(.*?)"$/ do |admin_user_name|
   @administrator = FactoryGirl.create(:admin_user, username: admin_user_name)
 end
 
-Given /^I am logged in as an admin user$/ do
-  step 'there is an admin user "admin"'
-  visit new_session_path
-  fill_in("login", :with => @administrator.username)
-  fill_in("password", :with => @administrator.password)
-  click_button("Log in")
-end
-
-When /^I log in as an admin user$/ do
-  step 'I am logged in as an admin user'
-end
-
 Given /^there is a user "(.*?)"$/ do |user_name|
   @user = FactoryGirl.create(:user, username: user_name)
 end

@@ -1,0 +1,14 @@
+- title "Dashboard for #{@user.username}"
+
+%p
+  %strong Name:
+  = @user.username
+%p
+  %strong Email:
+  = @user.email
+%p
+  Later we will show the user's billing info here
+%p
+  = link_to "Edit", edit_admin_user_path(@user)
+  |
+  = link_to "Destroy", [:admin, @user], :confirm => 'Are you sure?', :method => :delete

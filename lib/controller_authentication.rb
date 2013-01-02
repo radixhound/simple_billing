@@ -24,6 +24,12 @@ module ControllerAuthentication
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
+  def current_user_only
+    if current_user.id != params[:id].to_i
+      redirect_to current_user, :alert => "You are not authorized to view that page."
+    end
+  end
+
   def logged_in?
     current_user
   end
@@ -37,7 +43,7 @@ module ControllerAuthentication
 
   def admins_only
     unless current_user.try(:is_admin?)
-      redirect_to root_url, :alert => "You must be an administrator to view this page."
+      redirect_to current_user, :alert => "You must be an administrator to view this page."
     end
   end
 
