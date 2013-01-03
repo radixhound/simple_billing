@@ -18,8 +18,9 @@ SimpleBilling::Application.routes.draw do
   match 'login' => 'sessions#new', :as => :login
 
   resources :sessions
-  resources :invoices, :only => [:show]
-  resources :users, :except => [:index]
+  resources :users, :except => [:index] do
+    resources :invoices, :only => [:show]
+  end
 
   root :to => 'home#index'
   # The priority is based upon order of creation:

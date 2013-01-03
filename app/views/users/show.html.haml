@@ -6,9 +6,12 @@
 %p
   %strong Email:
   = @user.email
+%section.invoices
+  %header
+    %h3 
+      Invoices
+  = render partial: 'invoices_table', locals: { invoices: @user.invoices, user: @user }
 %p
-  Later we will show the user's billing info here
-%p
-  = link_to "Edit", edit_admin_user_path(@user)
+  = link_to "Edit", edit_user_path(@user)
   |
   = link_to "Destroy", [:admin, @user], :confirm => 'Are you sure?', :method => :delete

@@ -5,7 +5,7 @@ When /^I add a \$(\d+\.\d+) invoice for "(.*?)"$/ do |amount, title|
   click_button("Create Invoice")
 end
 
-Given /^there is a \$(\d+\.\d+) invoice "(.*?)" for "(.*?)"$/ do |amount, title, user_name|
+Given /^there is a \$(\d+\.\d+) invoice "(.*?)" for the user "(.*?)"$/ do |amount, title, user_name|
   user = User.where(username: user_name).first
   user.invoices.create( title: title, amount: amount, 
                         description: 'bleh', date: Time.current)
@@ -34,6 +34,24 @@ When /^I edit the invoice "(.*?)" to have:$/ do |title, table|
   fill_in("invoice_title", with: table.rows_hash['title'])
   fill_in("invoice_amount", with: table.rows_hash['amount'])
   click_button("Update Invoice")
+end
+
+Given /^I am on my user page$/ do
+  visit user_path(@user)
+  find("h1.main_title").should have_content("Dashboard for #{@user.username}")
+end
+
+Then /^I should see my invoices$/ do
+  step %q(I should see "Potatoes" for $5.00)
+  step %q(I should see "Bacon" for $6.00)
+end
+
+When /^I click on the invoice for "(.*?)"$/ do |title|
+  for_invoice(title) { click_link("Show") }
+end
+
+Then /^I should be on the invoice page for "(.*?)"$/ do |title|
+  find('h1.main_title').should have_content("Invoice for #{title}")
 end
 
 def for_invoice(title)

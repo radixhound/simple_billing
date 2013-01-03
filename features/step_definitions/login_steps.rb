@@ -1,7 +1,7 @@
-def login_as(user)
+def login_as(user, password = nil)
   visit new_session_path
   fill_in("login", :with => user.username)
-  fill_in("password", :with => user.password)
+  fill_in("password", :with => password || user.password)
   click_button("Log in")
 end
 
@@ -21,4 +21,9 @@ end
 
 When /^I log in as a user$/ do
   step 'I am logged in as a user'
+end
+
+Given /^I log in as a user "(.*?)"$/ do |user_name|
+  user = User.where(username: user_name).first
+  login_as(user, 'password')
 end

@@ -1,0 +1,13 @@
+%table
+  %tr
+    %th Title
+    %th Amount
+    %th Date
+    %th Actions
+  - for invoice in invoices
+    %tr{id: "invoice_#{invoice.id}"}
+      %td= invoice.title
+      %td= number_to_currency invoice.amount
+      %td= invoice.date
+      %td
+        = link_to 'Show', [user, invoice]
