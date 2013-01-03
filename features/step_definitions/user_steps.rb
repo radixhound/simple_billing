@@ -1,5 +1,5 @@
-Then /^I should be on my User page$/ do
-  step 'I should be on the user page for "Bob"'
+Then /^I should be on my user page$/ do
+  step %Q(I should be on the user page for "#{@user.username}")
 end
 
 Then /^I should be on the user page for "(.*?)"$/ do |user_name|

@@ -19,6 +19,11 @@ Given /^I am logged in as a user$/ do
   login_as(@user)
 end
 
+Given /^I am logged in as a user "(.*?)"$/ do |user_name|
+  step %Q(there is a user "#{user_name}")
+  login_as(@user)
+end
+
 When /^I log in as a user$/ do
   step 'I am logged in as a user'
 end
