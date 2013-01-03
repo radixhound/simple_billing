@@ -1,9 +1,9 @@
-class Admin::InvoicesController < ApplicationController
+class Admin::InvoicesController < AdminController
   
   before_filter :get_user
 
   def show
-    @invoice = Invoice.find(params[:id])
+    @invoice = @user.invoices.find(params[:id])
   end
 
   def new
@@ -11,7 +11,7 @@ class Admin::InvoicesController < ApplicationController
   end
 
   def create
-    @invoice = Invoice.new(params[:invoice])
+    @invoice = @user.invoices.build(params[:invoice])
     if @invoice.save
       redirect_to [:admin, @user], :notice => "Successfully created invoice."
     else
@@ -20,22 +20,22 @@ class Admin::InvoicesController < ApplicationController
   end
 
   def update
-    @invoice = Invoice.find(params[:id])
+    @invoice = @user.invoices.find(params[:id])
     if @invoice.update_attributes(params[:invoice])
-      redirect_to [:admin, @user, @invoice], :notice  => "Successfully updated invoice."
+      redirect_to [:admin, @user], :notice  => "Successfully updated invoice."
     else
       render :action => 'edit'
     end
   end
 
   def destroy
-    @invoice = Invoice.find(params[:id])
+    @invoice = @user.invoices.find(params[:id])
     @invoice.destroy
-    redirect_to root_url, :notice => "Successfully destroyed invoice."
+    redirect_to [:admin, @user], :notice => "Successfully destroyed invoice."
   end
 
   def edit
-    @invoice = Invoice.find(params[:id])
+    @invoice = @user.invoices.find(params[:id])
   end
 
   private

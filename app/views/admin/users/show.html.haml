@@ -6,8 +6,12 @@
 %p
   %strong Email:
   = @user.email
-%p
-  = link_to "Add Invoice", new_admin_user_invoice_path(@user)
+%section.invoices
+  %header 
+    %h3 
+      Invoices
+      = link_to "Add Invoice", new_admin_user_invoice_path(@user)
+  = render partial: 'invoices_table', locals: { invoices: @user.invoices, user: @user }
 %p
   = link_to "Edit", edit_admin_user_path(@user)
   |

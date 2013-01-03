@@ -8,7 +8,7 @@ Feature: Edit user
         And there is a user "BobMarley"
 
     Scenario: Destroy a user
-        When I edit "BobMarley" to have:
+        When I edit the user "BobMarley" to have:
             | username | RobertMarley |
             | email    | rob@example.com |
         Then I should see "RobertMarley" on the Admin Dashboard

@@ -16,7 +16,7 @@ Feature: Add invoices
   Scenario: Edit an invoice
     Given there is a $5.00 invoice "Potatoes" for "BobMarley"
     And I am on the admin user page for "BobMarley"
-    When I edit "Potatoes" to have:
+    When I edit the invoice "Potatoes" to have:
       | title  | Bacon |
       | amount | 5.50  |
     Then I should be on the admin user page for "BobMarley"
