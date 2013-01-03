@@ -1,0 +1,11 @@
+one:
+  title: MyString
+  description: MyText
+  amount: 9.99
+  date: 2013-01-03 10:31:04
+
+two:
+  title: MyString
+  description: MyText
+  amount: 9.99
+  date: 2013-01-03 10:31:04

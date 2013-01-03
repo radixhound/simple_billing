@@ -1,9 +1,12 @@
 SimpleBilling::Application.routes.draw do
 
+
   namespace(:admin){ 
     root to: 'admins#index'
-
-    resources :users 
+    
+    resources :users do
+      resources :invoices
+    end
   }
 
   match 'user/edit' => 'users#edit', :as => :edit_current_user
@@ -15,8 +18,8 @@ SimpleBilling::Application.routes.draw do
   match 'login' => 'sessions#new', :as => :login
 
   resources :sessions
-
-  resources :users
+  resources :invoices, :only => [:show]
+  resources :users, :except => [:index]
 
   root :to => 'home#index'
   # The priority is based upon order of creation:

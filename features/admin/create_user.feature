@@ -10,4 +10,3 @@ Feature: Add users
         Given there are no users in the system
         When I add "Hyde Park Distribution" 
         Then I should see "Hyde Park Distribution" on the Admin Dashboard
-

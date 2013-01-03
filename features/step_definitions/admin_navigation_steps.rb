@@ -17,11 +17,7 @@ end
 
 Given /^I am viewing a user$/ do
   step 'there is a user "Bob"'
-  visit admin_root_path
-  user_row_id = "#user_#{@user.id}"
-  within(:css, user_row_id) do
-    click_link('Show')
-  end
+  step 'I am on the admin user page for "Bob"'
 end
 
 Then /^I should be able to return to the dasboard$/ do
@@ -35,4 +31,10 @@ Then /^I should be able to log out$/ do
   find("h1.main_title").should have_content("Simple Billing Home")
 end
 
-
+Given /^I am on the admin user page for "(.*?)"$/ do |user_name|
+  visit admin_root_path
+  user_row_id = "#user_#{@user.id}"
+  within(:css, user_row_id) do
+    click_link('Show')
+  end
+end
