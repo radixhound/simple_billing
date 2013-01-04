@@ -1,15 +1,7 @@
-= form_for @user do |f|
+= form_for @user, :url => user_activation_path do |f|
   = hidden_field_tag :signup_token, @user.signup_token
 
   = f.error_messages
-  %p
-    = f.label :username
-    %br
-    = f.text_field :username
-  %p
-    = f.label :email, "Email Address"
-    %br
-    = f.text_field :email
   %p
     = f.label :password
     %br

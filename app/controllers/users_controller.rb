@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :login_required, :except => [:new, :create]
+  before_filter :login_required, :except => [:new, :create, :activate, :confirm]
   
   before_filter :current_user_only, :only => [:show]
 
@@ -28,9 +28,28 @@ class UsersController < ApplicationController
   def update
     @user = current_user
     if @user.update_attributes(params[:user])
-      redirect_to root_url, :notice => "Your profile has been updated."
+      redirect_to @user, :notice => "Your profile has been updated."
     else
       render :action => 'edit'
+    end
+  end
+
+  def confirm
+    @user = User.where(signup_token: params[:signup_token]).first
+  end
+
+  def activate
+    if signup_token = params[:signup_token]
+      @user = User.where(signup_token: signup_token).first
+      @user.signup_token = nil
+      if @user.update_attributes(params[:user])
+        session[:user_id] = @user.id
+        redirect_to @user, :notice => "Signup successful."
+      else
+        render :action => 'confirm'
+      end
+    else
+      not_found
     end
   end
 end

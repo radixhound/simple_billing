@@ -10,6 +10,15 @@ FactoryGirl.define do
     factory :admin_user do
       admin true
     end
+
+    factory :pending_user do
+      password ''
+      password_confirmation ''
+
+      before(:create) do |pending_user, evaluator|
+        pending_user.create_signup_token
+      end
+    end
   end
 
 

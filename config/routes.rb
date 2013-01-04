@@ -16,6 +16,9 @@ SimpleBilling::Application.routes.draw do
 
   match 'login' => 'sessions#new', :as => :login
 
+  match 'confirm/:signup_token' => 'users#confirm', :as => :user_confirmation
+  match 'activate/:signup_token' => 'users#activate', :as => :user_activation
+
   resources :sessions
   resources :users, :except => [:index] do
     resources :invoices, :only => [:show]

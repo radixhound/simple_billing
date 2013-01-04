@@ -10,6 +10,7 @@ class Admin::UsersController < AdminController
 
   def create
     @user = User.new(params[:user])
+    @user.create_signup_token
     if @user.save
       redirect_to admin_root_url, :notice => "Successfully created user."
     else

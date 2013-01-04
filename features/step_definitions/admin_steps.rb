@@ -16,8 +16,8 @@ When /^I add "(.*?)"$/ do |user_name|
   click_link("Add User")
   fill_in("user_username", with: @new_user.username )
   fill_in("user_email", with: @new_user.email )
-  fill_in("user_password", with: @new_user.password )
-  fill_in("user_password_confirmation", with: @new_user.password )
+  # fill_in("user_password", with: @new_user.password )
+  # fill_in("user_password_confirmation", with: @new_user.password )
   click_button("Create User")
   # save_and_open_page
 end
@@ -27,6 +27,10 @@ Then /^I should see "(.*?)" on the Admin Dashboard$/ do |user_name|
   page.should have_content('Admin Dashboard')
 end
 
+Then /^"(.*?)" has a signup token$/ do |user_name|
+  user = User.where(username: user_name).first
+  user.signup_token.should be
+end
 
 When /^I destroy "(.*?)"$/ do |user_name|
   user_row_id = "#user_#{@user.id}"
