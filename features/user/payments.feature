@@ -14,6 +14,13 @@ Feature: Bill payment
     And I make a payment
     Then the invoice for "Potatoes" should be marked as paid
 
+    Scenario: Fail to pay my bill
+    Given I am on my user page
+    When I open the invoice for "Potatoes"
+    And I make an invalid payment
+    Then the invoice for "Potatoes" should not be marked as paid
+    And I should see "Unable to process payment for Potatoes."
+
   Scenario: Back out of payment
     Given I am on my user page
     When I open the invoice for "Potatoes"

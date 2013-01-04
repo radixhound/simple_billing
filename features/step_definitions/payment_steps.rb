@@ -19,3 +19,12 @@ Then /^the invoice for "(.*?)" should not be marked as paid$/ do |title|
   find('h1.main_title').should have_content("Invoice for #{title}")
   page.has_css?('.paid')
 end
+
+When /^I make an invalid payment$/ do
+  PaymentProcessor.any_instance.stubs(:process => false)
+  step 'I make a payment'
+end
+
+Then /^I should see "(.*?)"$/ do |message|
+  page.should have_content(message)
+end

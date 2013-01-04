@@ -17,8 +17,10 @@ class PaymentsController < ApplicationController
 end
 
 class PaymentProcessor
-  def initialize(invoice)
+
+  def initialize(invoice, payment_options = {})
     @invoice = invoice
+    @payment_options = payment_options
   end
 
   def process
