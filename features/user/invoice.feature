@@ -15,5 +15,5 @@ Feature: View invoices
 
   Scenario: View individual invoice
     Given I am on my user page
-    When I click on the invoice for "Potatoes"
+    When I open the invoice for "Potatoes"
     Then I should be on the invoice page for "Potatoes"

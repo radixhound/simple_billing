@@ -18,6 +18,6 @@ Feature: User navigation
       Given I am logged in as a user "Bob"
       And there is a $5.00 invoice "Potatoes" for the user "Bob"
       And I am on my user page
-      When I click on the invoice for "Potatoes"
+      When I open the invoice for "Potatoes"
       And I click the back button
       Then I should be on my user page

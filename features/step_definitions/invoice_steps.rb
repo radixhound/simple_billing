@@ -46,7 +46,7 @@ Then /^I should see my invoices$/ do
   step %q(I should see "Bacon" for $6.00)
 end
 
-When /^I click on the invoice for "(.*?)"$/ do |title|
+When /^I open the invoice for "(.*?)"$/ do |title|
   for_invoice(title) { click_link("Show") }
 end
 

@@ -5,6 +5,8 @@ class CreateInvoices < ActiveRecord::Migration
       t.text :description
       t.decimal :amount
       t.datetime :date
+      t.references :user
+      t.boolean :paid, :default => false
       t.timestamps
     end
   end

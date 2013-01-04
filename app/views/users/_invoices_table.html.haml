@@ -3,11 +3,13 @@
     %th Title
     %th Amount
     %th Date
+    %th Paid?
     %th Actions
   - for invoice in invoices
     %tr{id: "invoice_#{invoice.id}"}
       %td= invoice.title
       %td= number_to_currency invoice.amount
       %td= invoice.date
+      %td.paid= invoice.paid? ? 'Yes' : 'No'
       %td
         = link_to 'Show', [user, invoice]

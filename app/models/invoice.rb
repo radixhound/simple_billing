@@ -1,5 +1,5 @@
 class Invoice < ActiveRecord::Base
-  attr_accessible :title, :description, :amount, :date
+  attr_accessible :title, :description, :amount, :date, :paid
 
   belongs_to :user
 

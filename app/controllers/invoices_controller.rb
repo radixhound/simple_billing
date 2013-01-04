@@ -1,5 +1,6 @@
 class InvoicesController < ApplicationController
   def show
-    @invoice = Invoice.find(params[:id])
+    @user = User.find(params[:user_id])
+    @invoice = @user.invoices.find(params[:id])
   end
 end

@@ -13,5 +13,12 @@
   %strong Date:
   = @invoice.date
 
+%p.paid
+  %strong Paid?
+  - unless @invoice.paid?
+    = link_to "Pay Now", user_payment_path(@user, @invoice)
+  - else
+    Paid
+
 %p
-  = link_to "Back", user_path(@invoice.user)
+  = link_to "Back", user_path(@user)

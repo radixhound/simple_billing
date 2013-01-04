@@ -1,6 +1,5 @@
 SimpleBilling::Application.routes.draw do
 
-
   namespace(:admin){ 
     root to: 'admins#index'
     
@@ -20,6 +19,10 @@ SimpleBilling::Application.routes.draw do
   resources :sessions
   resources :users, :except => [:index] do
     resources :invoices, :only => [:show]
+
+    match 'payments/:invoice_id/confirm' => 'payments#confirm', :as => :confirm_payment
+    match 'payments/:invoice_id' => 'payments#new', :as => :payment
+    # post 'payments' => 'payments#create', :as => :create_payment
   end
 
   root :to => 'home#index'
