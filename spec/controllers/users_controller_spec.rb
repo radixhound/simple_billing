@@ -4,6 +4,8 @@ describe UsersController do
   fixtures :all
   render_views
 
+  let(:user) { User.first }
+
   it "new action should render new template" do
     get :new
     response.should render_template(:new)
@@ -28,7 +30,7 @@ describe UsersController do
   end
 
   it "edit action should render edit template" do
-    @controller.stubs(:current_user).returns(User.first)
+    @controller.stubs(:current_user).returns(user)
     get :edit, :id => "ignored"
     response.should render_template(:edit)
   end
@@ -40,17 +42,17 @@ describe UsersController do
     end
 
     it "should render edit template when user is invalid" do
-      @controller.stubs(:current_user).returns(User.first)
+      @controller.stubs(:current_user).returns(user)
       User.any_instance.stubs(:valid?).returns(false)
       put :update, :id => "ignored"
       response.should render_template(:edit)
     end
 
     it "should redirect when user is valid" do
-      @controller.stubs(:current_user).returns(User.first)
+      @controller.stubs(:current_user).returns(user)
       User.any_instance.stubs(:valid?).returns(true)
       put :update, :id => "ignored"
-      response.should redirect_to(root_url)
+      response.should redirect_to(user_path(user))
     end
   end
 end

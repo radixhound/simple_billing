@@ -1,4 +1,4 @@
 - title "Confirm Payment"
 
-= link_to "Yes", user_confirm_payment_path(@user, @invoice)
+= link_to "Yes", user_confirm_payment_path(@user, @invoice), :method => :put
 = link_to "No", user_invoice_path(@user, @invoice)

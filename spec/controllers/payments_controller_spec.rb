@@ -4,20 +4,34 @@ describe PaymentsController do
   fixtures :all
   render_views
 
-  it "new action should render new template" do
-    get :new
-    response.should render_template(:new)
+  let(:invoice) { FactoryGirl.create(:invoice) }
+  let(:user) { invoice.user }
+
+  describe "#new" do
+    it "renders new template" do
+      get :new, user_id: user.id, invoice_id: invoice.id
+      response.should render_template(:new)
+    end
   end
 
-  it "create action should render new template when model is invalid" do
-    Payment.any_instance.stubs(:valid?).returns(false)
-    post :create
-    response.should render_template(:new)
-  end
+  describe "#confirm" do
+    context "when payment is valid" do
+      it "redirects to user page" do
+        put :confirm, user_id: user.id, invoice_id: invoice.id
+        response.should redirect_to(user_path(user))
+      end
+    end
 
-  it "create action should redirect when model is valid" do
-    Payment.any_instance.stubs(:valid?).returns(true)
-    post :create
-    response.should redirect_to(root_url)
+    context "when payment is not valid" do
+
+      before do
+        PaymentProcessor.any_instance.stubs(process: false)
+      end
+
+      it "redirects to invoice page" do
+        put :confirm, user_id: user.id, invoice_id: invoice.id
+        response.should redirect_to(user_invoice_path(user, invoice))
+      end
+    end
   end
 end

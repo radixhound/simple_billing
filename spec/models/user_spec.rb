@@ -13,44 +13,6 @@ describe User do
     User.delete_all
   end
 
-  it "should be valid" do
-    new_user.should be_valid
-  end
-
-  it "should require username" do
-    new_user(:username => '').should have(1).error_on(:username)
-  end
-
-  it "should require password" do
-    new_user(:password => '').should have(1).error_on(:password)
-  end
-
-  it "should require well formed email" do
-    new_user(:email => 'foo@bar@example.com').should have(1).error_on(:email)
-  end
-
-  it "should validate uniqueness of email" do
-    new_user(:email => 'bar@example.com').save!
-    new_user(:email => 'bar@example.com').should have(1).error_on(:email)
-  end
-
-  it "should validate uniqueness of username" do
-    new_user(:username => 'uniquename').save!
-    new_user(:username => 'uniquename').should have(1).error_on(:username)
-  end
-
-  it "should not allow odd characters in username" do
-    new_user(:username => 'odd ^&(@)').should have(1).error_on(:username)
-  end
-
-  it "should validate password is longer than 3 characters" do
-    new_user(:password => 'bad').should have(1).error_on(:password)
-  end
-
-  it "should require matching password confirmation" do
-    new_user(:password_confirmation => 'nonmatching').should have(1).error_on(:password)
-  end
-
   it "should generate password hash and salt on create" do
     user = new_user
     user.save!

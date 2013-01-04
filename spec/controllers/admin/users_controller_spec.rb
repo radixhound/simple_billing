@@ -4,54 +4,67 @@ describe Admin::UsersController do
   fixtures :all
   render_views
 
-  it "index action should render index template" do
-    get :index
-    response.should render_template(:index)
+  let(:admin_user) { FactoryGirl.create(:admin_user) }
+
+  before do
+    session[:user_id] = admin_user.id
   end
 
-  it "show action should render show template" do
-    get :show, :id => User.first
-    response.should render_template(:show)
+  describe "#show" do
+    it "renders show template" do
+      get :show, :id => User.first
+      response.should render_template(:show)
+    end
   end
 
-  it "new action should render new template" do
-    get :new
-    response.should render_template(:new)
+  describe "#new" do
+    it "renders new template" do
+      get :new
+      response.should render_template(:new)
+    end
   end
 
-  it "create action should render new template when model is invalid" do
-    User.any_instance.stubs(:valid?).returns(false)
-    post :create
-    response.should render_template(:new)
+  describe '#create' do
+    it "renders new template when model is invalid" do
+      User.any_instance.stubs(:valid?).returns(false)
+      post :create
+      response.should render_template(:new)
+    end
+
+    it "redirects when model is valid" do
+      User.any_instance.stubs(:valid?).returns(true)
+      post :create
+      response.should redirect_to(admin_root_url)
+    end
   end
 
-  it "create action should redirect when model is valid" do
-    User.any_instance.stubs(:valid?).returns(true)
-    post :create
-    response.should redirect_to(admin_user_url(assigns[:user]))
+  describe '#edit' do
+    it "edit action should render edit template" do
+      get :edit, :id => User.first
+      response.should render_template(:edit)
+    end
   end
 
-  it "edit action should render edit template" do
-    get :edit, :id => User.first
-    response.should render_template(:edit)
+  describe '#update' do
+    it "renders edit template when model is invalid" do
+      User.any_instance.stubs(:valid?).returns(false)
+      put :update, :id => User.first
+      response.should render_template(:edit)
+    end
+
+    it "redirects when model is valid" do
+      User.any_instance.stubs(:valid?).returns(true)
+      put :update, :id => User.first
+      response.should redirect_to(admin_root_url)
+    end
   end
 
-  it "update action should render edit template when model is invalid" do
-    User.any_instance.stubs(:valid?).returns(false)
-    put :update, :id => User.first
-    response.should render_template(:edit)
-  end
-
-  it "update action should redirect when model is valid" do
-    User.any_instance.stubs(:valid?).returns(true)
-    put :update, :id => User.first
-    response.should redirect_to(admin_user_url(assigns[:user]))
-  end
-
-  it "destroy action should destroy model and redirect to index action" do
-    user = User.first
-    delete :destroy, :id => user
-    response.should redirect_to(admin_users_url)
-    User.exists?(user.id).should be_false
+  describe '#destroy' do
+    it "destroys model and redirect to index action" do
+      user = User.first
+      delete :destroy, :id => user
+      response.should redirect_to(admin_root_url)
+      User.exists?(user.id).should be_false
+    end
   end
 end

@@ -4,6 +4,8 @@ describe SessionsController do
   fixtures :all
   render_views
 
+  let(:user) { User.first }
+
   it "new action should render new template" do
     get :new
     response.should render_template(:new)
@@ -17,9 +19,9 @@ describe SessionsController do
   end
 
   it "create action should redirect when authentication is valid" do
-    User.stubs(:authenticate).returns(User.first)
+    User.stubs(:authenticate).returns(user)
     post :create
-    response.should redirect_to(root_url)
-    session['user_id'].should == User.first.id
+    response.should redirect_to(user_path(user))
+    session['user_id'].should == user.id
   end
 end

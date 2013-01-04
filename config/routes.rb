@@ -23,7 +23,7 @@ SimpleBilling::Application.routes.draw do
   resources :users, :except => [:index] do
     resources :invoices, :only => [:show]
 
-    match 'payments/:invoice_id/confirm' => 'payments#confirm', :as => :confirm_payment
+    put 'payments/:invoice_id/confirm' => 'payments#confirm', :as => :confirm_payment
     match 'payments/:invoice_id' => 'payments#new', :as => :payment
     # post 'payments' => 'payments#create', :as => :create_payment
   end
