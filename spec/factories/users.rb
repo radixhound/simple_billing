@@ -20,6 +20,13 @@ FactoryGirl.define do
         pending_user.create_signup_token
       end
     end
+
+    factory :user_with_card do
+      stripe_card_token "tok_sometoken"
+      stripe_card_type "Visa"
+      stripe_card_digits "4242"
+      stripe_card_expiry "01 / 2013"
+    end
   end
 
 
