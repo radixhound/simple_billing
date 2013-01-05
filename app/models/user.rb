@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
   # new columns need to be added here to be writable through mass assignment
   attr_accessible :username, :email, :password, :password_confirmation, 
-                  :admin
+                  :admin, :stripe_card_token, :stripe_card_type,
+                  :stripe_card_digits, :stripe_card_expiry
 
   has_many :invoices
 
@@ -40,6 +41,10 @@ class User < ActiveRecord::Base
 
   def create_signup_token
     self.signup_token = SecureRandom.uuid
+  end
+
+  def has_card?
+    stripe_card_token.present?
   end
 
   private
