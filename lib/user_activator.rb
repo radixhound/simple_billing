@@ -8,18 +8,19 @@ class UserActivator
 
   def activate
     @user.signup_token = nil
-    @user.stripe_user_id = create_stripe_customer if @params[:stripe_card_token].present?
+    card_token = @params.delete(:stripe_card_token)
+    @user.stripe_user_id = create_stripe_customer(card_token) unless card_token.blank?
     @user.update_attributes(@params)
     @user
   end
 
   private
 
-  def create_stripe_customer
+  def create_stripe_customer(card_token)
     response = Stripe::Customer.create(
       :description => "#{@user.username}",
       :email => "#{@user.email}", 
-      :card => @params.delete(:stripe_card_token) )
+      :card => card_token )
     response.id
   end
 

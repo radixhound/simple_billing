@@ -32,7 +32,10 @@ describe UserActivator do
     end
 
     context "when no card data is provided" do
-      let(:user_params) { { password: '123456', password_confirmation: '123456'} }
+      let(:user_params) { { password: '123456', password_confirmation: '123456',
+                   stripe_card_token: "",
+                   stripe_card_type: "", stripe_card_digits: "",
+                   stripe_card_expiry: ""} }
 
       it 'should not try to create the stripe user' do
         UserActivator.any_instance.expects(:create_stripe_customer).never
