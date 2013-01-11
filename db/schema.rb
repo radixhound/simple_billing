@@ -33,7 +33,6 @@ ActiveRecord::Schema.define(:version => 20130105001123) do
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
     t.string   "signup_token"
-    t.string   "stripe_card_token"
     t.string   "stripe_user_id"
     t.string   "stripe_card_type"
     t.string   "stripe_card_digits"

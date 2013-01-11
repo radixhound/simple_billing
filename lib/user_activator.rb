@@ -8,7 +8,7 @@ class UserActivator
 
   def activate
     @user.signup_token = nil
-    @user.stripe_user_id = create_stripe_customer if @params[:stripe_card_token]
+    @user.stripe_user_id = create_stripe_customer if @params[:stripe_card_token].present?
     @user.update_attributes(@params)
     @user
   end

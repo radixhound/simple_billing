@@ -22,6 +22,7 @@ FactoryGirl.define do
     end
 
     factory :user_with_card do
+      stripe_user_id "cus_15MdST1exra0SF"
       stripe_card_token "tok_sometoken"
       stripe_card_type "Visa"
       stripe_card_digits "4242"

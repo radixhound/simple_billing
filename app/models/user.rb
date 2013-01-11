@@ -1,8 +1,10 @@
 class User < ActiveRecord::Base
   # new columns need to be added here to be writable through mass assignment
   attr_accessible :username, :email, :password, :password_confirmation, 
-                  :admin, :stripe_card_token, :stripe_card_type,
+                  :admin, :stripe_user_id, :stripe_card_token, :stripe_card_type,
                   :stripe_card_digits, :stripe_card_expiry
+
+  attr_accessor :stripe_card_token
 
   has_many :invoices
 
@@ -44,7 +46,7 @@ class User < ActiveRecord::Base
   end
 
   def has_card?
-    stripe_card_token.present?
+    stripe_user_id.present?
   end
 
   private
