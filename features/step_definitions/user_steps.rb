@@ -3,7 +3,9 @@ Then /^I should be on my user page$/ do
 end
 
 Then /^I should be on the user page for "(.*?)"$/ do |user_name|
-  find("h1.main_title").should have_content("Dashboard for #{user_name}")
+  retry_on_timeout(3) do
+    find("h1.main_title").should have_content("Dashboard for #{user_name}")
+  end
 end
 
 When /^I try to visit the user page for "(.*?)"$/ do |user_name|

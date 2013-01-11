@@ -6,6 +6,23 @@
 %p
   %strong Email:
   = @user.email
+
+- if @user.has_card?
+  %h3 Card on file
+  .card_info
+    %p.card_type
+      %strong Card Type:
+      =@user.stripe_card_type
+    %p.card_digits
+      %strong Card Number:
+      **** **** **** #{@user.stripe_card_digits}
+    %p.card_expiry
+      %strong Card Expiry:
+      = @user.stripe_card_expiry
+  
+- else
+  %h3 No Card on File
+
 %section.invoices
   %header
     %h3 
@@ -13,5 +30,3 @@
   = render partial: 'invoices_table', locals: { invoices: @user.invoices, user: @user }
 %p
   = link_to "Edit", edit_user_path(@user)
-  |
-  = link_to "Destroy", [:admin, @user], :confirm => 'Are you sure?', :method => :delete

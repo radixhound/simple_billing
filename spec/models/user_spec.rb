@@ -13,6 +13,22 @@ describe User do
     User.delete_all
   end
 
+  describe '#has_card?' do
+    subject { user }
+
+    context "when user has card" do
+      let(:user) { FactoryGirl.create(:user_with_card)}
+
+      its(:has_card?) { should be_true }
+    end
+
+    context "when user has no card" do
+      let(:user) { FactoryGirl.create(:user)}
+
+      its(:has_card?) { should be_false }
+    end
+  end
+
   it "should generate password hash and salt on create" do
     user = new_user
     user.save!
