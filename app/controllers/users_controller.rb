@@ -40,9 +40,8 @@ class UsersController < ApplicationController
 
   def activate
     if signup_token = params[:signup_token]
-      @user = User.where(signup_token: signup_token).first
-      @user.signup_token = nil
-      if @user.update_attributes(params[:user])
+      @user = UserActivator.new(signup_token, params[:user]).activate
+      if @user.valid?
         session[:user_id] = @user.id
         redirect_to @user, :notice => "Signup successful."
       else
