@@ -16,18 +16,3 @@ class PaymentsController < ApplicationController
   end
 end
 
-class PaymentProcessor
-
-  def initialize(invoice, payment_options = {})
-    @invoice = invoice
-    @payment_options = payment_options
-  end
-
-  def process
-    @invoice.update_attribute(:paid, true)
-  end
-
-  def customer_failure_message
-    "Unable to process payment for #{@invoice.title}."
-  end
-end

@@ -1,3 +1,7 @@
+Given /^there is a stripe activated user "(.*?)"$/ do |user_name|
+  @user = FactoryGirl.create(:stripe_activated_user, username: user_name)
+end
+
 When /^I make a payment$/ do
   click_link('Pay Now')
   find('h1.main_title').should have_content("Confirm Payment")

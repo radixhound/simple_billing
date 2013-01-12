@@ -28,6 +28,26 @@ FactoryGirl.define do
       stripe_card_digits "4242"
       stripe_card_expiry "01 / 2013"
     end
+
+    factory :stripe_activated_user do
+
+      before(:create) do |user, evaluator|
+        user.create_signup_token
+      end
+      after(:create) do |user, evaluator|
+        card_token = Stripe::Token.create(
+          card: { number: '4242424242424242',
+                  cvc: '123',
+                  exp_month: 12,
+                  exp_year:  2016 }
+        )
+        UserActivator.new(
+            user.signup_token, 
+            stripe_card_token: card_token.id 
+          ).activate
+      end
+
+    end
   end
 
 

@@ -4,9 +4,9 @@ Feature: Bill payment
   So that I can pay my bills
 
   Background:
-    Given there is a user "Bob"
-    And there is a $5.00 invoice "Potatoes" for the user "Bob"
-    And I log in as a user "Bob"
+    Given there is a stripe activated user "Bill"
+    And there is a $5.00 invoice "Potatoes" for the user "Bill"
+    And I log in as a user "Bill"
 
   Scenario: Pay my bill
     Given I am on my user page
