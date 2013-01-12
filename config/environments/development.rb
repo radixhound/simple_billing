@@ -15,7 +15,17 @@ SimpleBilling::Application.configure do
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
-
+  config.action_mailer.delivery_method = :test
+  config.action_mailer.default_url_options = { :host => "www.example.com" }
+  # ActionMailer::Base.smtp_settings = {
+  #   :address              => "mail.email.com",
+  #   :port                 => 25,
+  #   :domain               => 'example.com',
+  #   :user_name            => 'email@email.com',
+  #   :password             => 'password',
+  #   :authentication       => 'login',
+  #   :enable_starttls_auto => true  }
+ 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 

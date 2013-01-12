@@ -8,6 +8,7 @@ Feature: Add users
         
     Scenario: Add a user
         Given there are no users in the system
-        When I add "Hyde Park Distribution" 
-        Then I should see "Hyde Park Distribution" on the Admin Dashboard
-        And "Hyde Park Distribution" has a signup token
+        When I add "Bill" 
+        Then I should see "Bill" on the Admin Dashboard
+        And "Bill" has a signup token
+        And an email with activation link is sent to "Bill"
