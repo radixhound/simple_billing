@@ -22,24 +22,33 @@ describe PaymentProcessor do
 
       it "sends the charge to stripe" do
         Stripe::Charge.expects(:create).
-          with(amount: (invoice.amount * 100).to_i,
-                currency_type: 'CAD',
+          with( amount: (invoice.amount * 100).to_i,
+                currency: PaymentProcessor::CURRENCIES[:canadian],
                 customer: user.stripe_user_id,
                 description: "#{invoice.id}: #{invoice.title}").
           returns(succesful_charge)
         processor.process
       end
+
+      it "returns true" do
+        processor.process.should be_true
+      end
     end
 
     context "when payment unsuccessful" do
       before do
-        Stripe::Charge.stubs(:create).returns(unsuccesful_charge)
+        Stripe::Charge.stubs(:create).raises(Stripe::CardError.new('Big fat fail','param','code'))
       end
 
       it "keeps the invoice as unpaid" do
         processor.process
         invoice.paid.should be_false        
       end
+
+      it "returns false" do
+        processor.process.should be_false
+      end
+
     end
   end
 end 
