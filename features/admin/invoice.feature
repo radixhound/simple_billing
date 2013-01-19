@@ -35,3 +35,11 @@ Feature: Add invoices
     When I destroy the invoice for "Potatoes"
     Then I should be on the admin user page for "BobMarley"
     And I should not see "Potatoes" for $5.00
+
+  Scenario: Send second invoice
+    Given there is a user "Bill"
+    And I have a valid card
+    And I am on the admin user page for "Bill"
+    When I add a $5.00 invoice for "Potatoes"
+    And I send the invoice
+    Then an invoice notification is sent to "Bill"

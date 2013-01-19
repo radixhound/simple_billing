@@ -63,8 +63,12 @@ Given /^"(.*?)" has a (payable|pending) invoice "(.*?)" for \$(\d+\.\d+)$/ do |u
 end
 
 When /^I send the invoice$/ do
-  user = @invoice.user
-  step %Q(I am on the admin user page for "#{user.username}")
+  if @invoice
+    @user = @invoice.user
+  else
+    @invoice = @user.invoices.first
+  end
+  step %Q(I am on the admin user page for "#{@user.username}")
   for_invoice do
     click_link "Send"
   end

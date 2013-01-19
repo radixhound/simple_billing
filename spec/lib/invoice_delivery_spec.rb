@@ -19,7 +19,7 @@ describe InvoiceDelivery do
 
       it "sends a welcome email" do
         UserMailer.expects(:welcome_email).
-          with(invoice.user, invoice).
+          with(invoice).
           returns(welcome_email)
         welcome_email.expects(:deliver).returns(true)
         deliver
@@ -30,8 +30,10 @@ describe InvoiceDelivery do
       let(:user) { FactoryGirl.create(:user) }
 
       it "sends an invoice notification" do
-        # FIXME: don't stub the object under test
-        InvoiceDelivery.any_instance.expects(:deliver_invoice_notification)
+        UserMailer.expects(:invoice_notification).
+          with(invoice).
+          returns(welcome_email)
+        welcome_email.expects(:deliver).returns(true)
         deliver
       end
     end

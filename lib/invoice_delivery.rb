@@ -16,7 +16,7 @@ class InvoiceDelivery
   private
 
   def deliver_welcome_email
-    UserMailer.welcome_email(@invoice.user, @invoice).deliver
+    UserMailer.welcome_email(@invoice).deliver
   end
 
   def deliver_email
@@ -28,6 +28,6 @@ class InvoiceDelivery
   end
 
   def deliver_invoice_notification
-    true
+    UserMailer.invoice_notification(@invoice).deliver
   end
 end
