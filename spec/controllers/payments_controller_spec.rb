@@ -4,8 +4,8 @@ describe PaymentsController do
   fixtures :all
   render_views
 
-  let(:invoice) { FactoryGirl.create(:invoice) }
-  let(:user) { invoice.user }
+  let(:user) { FactoryGirl.create(:stripe_activated_user) }
+  let(:invoice) { FactoryGirl.create(:invoice, user: user) }
 
   describe "#new" do
     it "renders new template" do
@@ -23,7 +23,6 @@ describe PaymentsController do
     end
 
     context "when payment is not valid" do
-
       before do
         PaymentProcessor.any_instance.stubs(process: false)
       end

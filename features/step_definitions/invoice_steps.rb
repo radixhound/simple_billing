@@ -54,8 +54,28 @@ Then /^I should be on the invoice page for "(.*?)"$/ do |title|
   find('h1.main_title').should have_content("Invoice for #{title}")
 end
 
-def for_invoice(title)
-  invoice = Invoice.where(title: title).first
+Then /^I should see a (pending|payable) invoice "(.*?)" for \$(\d+\.\d+)$/ do |state, title, amount|
+  for_invoice(title) do
+     page.should have_content(amount)
+     page.should have_content(state)
+  end
+end
+
+Given /^"(.*?)" has a pending invoice "(.*?)" for \$(\d+\.\d+)$/ do |user_name, title, amount|
+  user = User.where(username: user_name).first
+  @invoice = FactoryGirl.create(:invoice, user: user, title: title, amount: amount)
+end
+
+When /^I send the invoice$/ do
+  user = @invoice.user
+  step %Q(I am on the admin user page for "#{user.username}")
+  for_invoice do
+    click_link "Send"
+  end
+end
+
+def for_invoice(title = "")
+  invoice = @invoice || Invoice.where(title: title).first
   invoice_row_id = "#invoice_#{invoice.id}"
   within(:css, invoice_row_id) { yield }
 end

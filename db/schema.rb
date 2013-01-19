@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130105001123) do
+ActiveRecord::Schema.define(:version => 20130119014058) do
 
   create_table "invoices", :force => true do |t|
     t.string   "title"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20130105001123) do
     t.boolean  "paid",        :default => false
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
+    t.boolean  "payable",     :default => false
   end
 
   create_table "users", :force => true do |t|
@@ -33,7 +34,6 @@ ActiveRecord::Schema.define(:version => 20130105001123) do
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
     t.string   "signup_token"
-    t.string   "stripe_card_token"
     t.string   "stripe_user_id"
     t.string   "stripe_card_type"
     t.string   "stripe_card_digits"

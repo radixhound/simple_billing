@@ -3,13 +3,17 @@
     %th Title
     %th Amount
     %th Date
+    %th State
     %th Actions
   - for invoice in invoices
     %tr{id: "invoice_#{invoice.id}"}
       %td= invoice.title
       %td= number_to_currency invoice.amount
       %td= invoice.date
+      %td= invoice.state
       %td
+        = link_to 'Send', admin_send_invoice_path(invoice) if invoice.pending?
         = link_to 'Show', [:admin, user, invoice]
-        = link_to 'Edit', edit_admin_user_invoice_path(user, invoice)
-        = link_to 'Destroy', [:admin, user, invoice], :confirm => 'Are you sure?', :method => :delete
+        - unless invoice.paid?
+          = link_to 'Edit', edit_admin_user_invoice_path(user, invoice) 
+          = link_to 'Destroy', [:admin, user, invoice], :confirm => 'Are you sure?', :method => :delete 

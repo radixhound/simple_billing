@@ -5,13 +5,19 @@ Feature: Add invoices
 
   Background: 
     Given I am logged in as an admin user
-    And there is a user "BobMarley"
+    And there is a pending user "BobMarley"
     
   Scenario: Add an invoice
     Given I am on the admin user page for "BobMarley"
     When I add a $5.00 invoice for "Potatoes"
     Then I should be on the admin user page for "BobMarley"
-    And I should see "Potatoes" for $5.00
+    And I should see a pending invoice "Potatoes" for $5.00
+
+  Scenario: Sending an invoice to a pending user
+    Given "BobMarley" has a pending invoice "Broccoli" for $5.00
+    When I send the invoice
+    Then I should see a payable invoice "Broccoli" for $5.00
+    And an invoice notification with activation link is sent to "BobMarley"
 
   Scenario: Edit an invoice
     Given there is a $5.00 invoice "Potatoes" for the user "BobMarley"

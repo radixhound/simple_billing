@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
 
   has_many :invoices
 
-  attr_accessor :password
+  attr_accessor :password, :stripe_card_token
   before_save :prepare_password
 
   validates_presence_of :username
@@ -46,6 +46,10 @@ class User < ActiveRecord::Base
 
   def has_card?
     stripe_user_id.present?
+  end
+
+  def pending?
+    signup_token.present?
   end
 
   private

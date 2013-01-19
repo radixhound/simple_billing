@@ -33,7 +33,8 @@ end
 
 Given /^I am on the admin user page for "(.*?)"$/ do |user_name|
   visit admin_root_path
-  user_row_id = "#user_#{@user.id}"
+  user = User.where(username: user_name).first
+  user_row_id = "#user_#{user.id}"
   within(:css, user_row_id) do
     click_link('Show')
   end

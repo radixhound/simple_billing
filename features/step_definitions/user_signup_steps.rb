@@ -1,4 +1,4 @@
-Given /^There is a pending user "(.*?)"$/ do |user_name|
+Given /^there is a pending user "(.*?)"$/ do |user_name|
   FactoryGirl.create(:pending_user, username: user_name)
 end
 

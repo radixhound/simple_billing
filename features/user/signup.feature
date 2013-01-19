@@ -5,7 +5,7 @@ Feature: Signup users
     I want to set my password and CC information at the signup page
 
     Background: 
-        Given There is a pending user "Bob"
+        Given there is a pending user "Bob"
         
     Scenario: User activates their account
         When I visit the activation page for "Bob"

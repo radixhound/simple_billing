@@ -1,6 +1,6 @@
 class Admin::InvoicesController < AdminController
   
-  before_filter :get_user
+  before_filter :get_user, except: [:deliver]
 
   def show
     @invoice = @user.invoices.find(params[:id])
@@ -36,6 +36,15 @@ class Admin::InvoicesController < AdminController
 
   def edit
     @invoice = @user.invoices.find(params[:id])
+  end
+
+  def deliver
+    invoice = Invoice.find(params[:id])
+    if InvoiceDelivery.new(invoice).deliver
+      redirect_to [:admin, invoice.user], :notice => "Invoice sent."
+    else
+      redirect_to [:admin, invoice.user], :alert => "Failed to send invoice!"
+    end
   end
 
   private

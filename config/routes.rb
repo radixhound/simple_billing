@@ -6,6 +6,8 @@ SimpleBilling::Application.routes.draw do
     resources :users do
       resources :invoices
     end
+
+    match 'invoices/deliver/:id' => 'invoices#deliver', as: :send_invoice
   }
 
   match 'user/edit' => 'users#edit', :as => :edit_current_user

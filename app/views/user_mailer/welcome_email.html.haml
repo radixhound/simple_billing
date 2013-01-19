@@ -1,8 +1,10 @@
 %p Dear #{@user.username};
 
-%p Someone cares enough about you to ask you for money. So use this handy link to activate your account on their simple billing website:
+%p You have a new invoice from Simple Billing
 
-%p Activation Link: #{@url}
+%p #{@invoice.title}, $#{@invoice.amount}
+
+%p Simple Billing makes it easy for you to pay this invoice. Just follow this handy link and we'll set up an account for you: #{@url}
 
 %p When you click the link you will be prompted to create an account then you will be able to authorize payments.
 
