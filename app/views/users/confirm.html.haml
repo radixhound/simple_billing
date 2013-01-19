@@ -4,6 +4,8 @@
 
 - title "Activate Account"
 
+%p Welcome to Simple Billing, the place where you can simply manage your invoices. Please activate your account by creating a secure password below and entering your billing information. Once you have done that you will be prompted to approve payment of your invoices like the one for #{@user.invoices.first.title} at #{number_to_currency @user.invoices.first.amount}
+
 = render 'activation_form'
 
 #stripe_error
