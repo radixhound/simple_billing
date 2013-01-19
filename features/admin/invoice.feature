@@ -20,7 +20,7 @@ Feature: Add invoices
     And an invoice notification with activation link is sent to "BobMarley"
 
   Scenario: Edit an invoice
-    Given there is a $5.00 invoice "Potatoes" for the user "BobMarley"
+    Given "BobMarley" has a payable invoice "Potatoes" for $5.00
     And I am on the admin user page for "BobMarley"
     When I edit the invoice "Potatoes" to have:
       | title  | Bacon |
@@ -30,7 +30,7 @@ Feature: Add invoices
     And I should not see "Potatoes" for $5.00
 
   Scenario: Destroy an invoice
-    Given there is a $5.00 invoice "Potatoes" for the user "BobMarley"
+    Given "BobMarley" has a payable invoice "Potatoes" for $5.00
     And I am on the admin user page for "BobMarley"
     When I destroy the invoice for "Potatoes"
     Then I should be on the admin user page for "BobMarley"

@@ -5,7 +5,7 @@ Feature: Bill payment
 
   Background:
     Given there is a user "Bill"
-    And there is a $5.00 invoice "Potatoes" for the user "Bill"
+    And "Bill" has a payable invoice "Potatoes" for $5.00
     And I log in as a user "Bill"
 
   Scenario: Pay my bill

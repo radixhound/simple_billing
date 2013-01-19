@@ -6,6 +6,7 @@ Feature: Signup users
 
     Background: 
         Given there is a pending user "Bob"
+        And "Bob" has a payable invoice "Potatoes" for $5.00
         
     Scenario: User activates their account
         When I visit the activation page for "Bob"

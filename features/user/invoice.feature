@@ -5,13 +5,18 @@ Feature: View invoices
 
   Background:
     Given there is a user "Bob"
-    And there is a $5.00 invoice "Potatoes" for the user "Bob"
-    And there is a $6.00 invoice "Bacon" for the user "Bob"
+    And "Bob" has a payable invoice "Potatoes" for $5.00
+    And "Bob" has a payable invoice "Bacon" for $6.00
     And I log in as a user "Bob"
+    And "Bob" has a pending invoice "Broccoli" for $5.01
 
   Scenario: View all invoices
     Given I am on my user page
-    Then I should see my invoices
+    Then I should see my invoices:
+    | title    | amount |
+    | Potatoes | $5.00  |
+    | Bacon    | $6.00  |
+    And I should not see "Broccoli" for $5.01
 
   Scenario: View individual invoice
     Given I am on my user page

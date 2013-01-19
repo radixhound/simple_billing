@@ -5,12 +5,6 @@ When /^I add a \$(\d+\.\d+) invoice for "(.*?)"$/ do |amount, title|
   click_button("Create Invoice")
 end
 
-Given /^there is a \$(\d+\.\d+) invoice "(.*?)" for the user "(.*?)"$/ do |amount, title, user_name|
-  user = User.where(username: user_name).first
-  user.invoices.create( title: title, amount: amount, 
-                        description: 'bleh', date: Time.current)
-end
-
 Then /^I should see "(.*?)" for \$(\d+\.\d+)$/ do |title, amount|
   find('.invoices').should have_content(title)
   find('.invoices').should have_content("$#{amount}")
@@ -41,9 +35,10 @@ Given /^I am on my user page$/ do
   find("h1.main_title").should have_content("Dashboard for #{@user.username}")
 end
 
-Then /^I should see my invoices$/ do
-  step %q(I should see "Potatoes" for $5.00)
-  step %q(I should see "Bacon" for $6.00)
+Then /^I should see my invoices:$/ do |table|
+  table.hashes.each do |row|
+    step %Q(I should see "#{row['title']}" for #{row['amount']})
+  end
 end
 
 When /^I open the invoice for "(.*?)"$/ do |title|
@@ -61,9 +56,10 @@ Then /^I should see a (pending|payable) invoice "(.*?)" for \$(\d+\.\d+)$/ do |s
   end
 end
 
-Given /^"(.*?)" has a pending invoice "(.*?)" for \$(\d+\.\d+)$/ do |user_name, title, amount|
+Given /^"(.*?)" has a (payable|pending) invoice "(.*?)" for \$(\d+\.\d+)$/ do |user_name, state, title, amount|
   user = User.where(username: user_name).first
-  @invoice = FactoryGirl.create(:invoice, user: user, title: title, amount: amount)
+  payable = state == "payable" ? true : false
+  @invoice = FactoryGirl.create(:invoice, user: user, title: title, amount: amount, payable: payable)
 end
 
 When /^I send the invoice$/ do
@@ -75,7 +71,7 @@ When /^I send the invoice$/ do
 end
 
 def for_invoice(title = "")
-  invoice = @invoice || Invoice.where(title: title).first
+  invoice = title == "" ? @invoice : Invoice.where(title: title).first
   invoice_row_id = "#invoice_#{invoice.id}"
   within(:css, invoice_row_id) { yield }
 end

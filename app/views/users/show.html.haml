@@ -27,6 +27,6 @@
   %header
     %h3 
       Invoices
-  = render partial: 'invoices_table', locals: { invoices: @user.invoices, user: @user }
+  = render partial: 'invoices_table', locals: { invoices: @user.payable_invoices, user: @user }
 %p
   = link_to "Edit", edit_user_path(@user)

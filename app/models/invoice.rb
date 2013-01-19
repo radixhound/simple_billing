@@ -20,6 +20,8 @@ class Invoice < ActiveRecord::Base
     self.save
   end
 
+  scope :payable, where(payable: true)
+
   def pending?
     !payable
   end

@@ -52,6 +52,10 @@ class User < ActiveRecord::Base
     signup_token.present?
   end
 
+  def payable_invoices
+    self.invoices.payable
+  end
+
   private
 
   def prepare_password

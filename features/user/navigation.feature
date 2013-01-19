@@ -16,7 +16,7 @@ Feature: User navigation
 
     Scenario: I can go back to my page once I view an invoice
       Given I am logged in as a user "Bob"
-      And there is a $5.00 invoice "Potatoes" for the user "Bob"
+      And "Bob" has a payable invoice "Potatoes" for $5.00
       And I am on my user page
       When I open the invoice for "Potatoes"
       And I click the back button
