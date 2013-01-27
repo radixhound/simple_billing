@@ -1,4 +1,17 @@
 - title "Confirm Payment"
 
-= link_to "Yes", user_confirm_payment_path(@user, @invoice), :method => :put
-= link_to "No", user_invoice_path(@user, @invoice)
+%p
+  Oh hi! You must be here to pay #{number_to_currency(@invoice.amount)} for #{@invoice.title}.
+
+%p
+  Would you like to make a payment with the following card?
+  %br
+  #{@user.stripe_card_type}
+  %br
+  **** **** **** #{@user.stripe_card_digits}
+  %br
+  #{@user.stripe_card_expiry}
+
+%p
+  = link_to "Yes", user_confirm_payment_path(@user, @invoice), :method => :put
+  = link_to "No", user_invoice_path(@user, @invoice)
