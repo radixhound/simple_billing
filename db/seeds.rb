@@ -11,3 +11,10 @@ User.create(username: 'admin', email: 'admin@admin.com', password: '123456',
 
 User.create(username: 'gabe', email: 'gabe@gabe.com', password: '123456', 
             password_confirmation: '123456', admin: false)
+
+bill = User.create(username: 'bill', email: 'bill@example.com',
+            admin: false)
+bill.create_signup_token
+bill.save!
+
+bill.invoices.create!(title: 'hi', amount: 4, payable: true)
