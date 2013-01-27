@@ -19,6 +19,8 @@ class User < ActiveRecord::Base
 
   validate :no_stripe_errors
 
+  scope :active, -> { where(:signup_token => nil) }
+
   def no_stripe_errors
     errors[:base] << @stripe_error if @stripe_error
   end
@@ -38,7 +40,7 @@ class User < ActiveRecord::Base
   # login can be either username or email address
   def self.authenticate(login, pass)
     return false if pass.blank?
-    user = find_by_username(login) || find_by_email(login)
+    user = active.where(:username => login).first || active.where(:email => login).first
     return user if user && user.password_hash == user.encrypt_password(pass)
   end
 
