@@ -12,7 +12,7 @@ SimpleBilling::Application.routes.draw do
 
   match 'user/edit' => 'users#edit', :as => :edit_current_user
 
-  match 'signup' => 'users#new', :as => :signup
+  # match 'signup' => 'users#new', :as => :signup
 
   match 'logout' => 'sessions#destroy', :as => :logout
 
@@ -22,7 +22,7 @@ SimpleBilling::Application.routes.draw do
   match 'activate/:signup_token' => 'users#activate', :as => :user_activation
 
   resources :sessions
-  resources :users, :except => [:index] do
+  resources :users, :except => [:index, :new] do
     resources :invoices, :only => [:show]
 
     put 'payments/:invoice_id/confirm' => 'payments#confirm', :as => :confirm_payment
