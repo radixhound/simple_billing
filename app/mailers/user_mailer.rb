@@ -5,7 +5,7 @@ class UserMailer < ActionMailer::Base
     @invoice = invoice
     @user = @invoice.user
     if @user.pending?
-      @url  = user_activation_url(@user.signup_token)
+      @url  = user_confirmation_url(@user.signup_token)
       mail(:to => @user.email, :subject => "Welcome to My Awesome Site")
     else
       raise "Can't send welcome email to active user"
