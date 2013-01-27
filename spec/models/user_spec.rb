@@ -1,17 +1,11 @@
 require 'spec_helper'
 
 describe User do
-  def new_user(attributes = {})
-    attributes[:username] ||= 'foo'
-    attributes[:email] ||= 'foo@example.com'
-    attributes[:password] ||= 'abc123'
-    attributes[:password_confirmation] ||= attributes[:password]
-    User.new(attributes)
-  end
-
-  before(:each) do
-    User.delete_all
-  end
+  let(:user) { FactoryGirl.create(:user, 
+    username: 'foobar',
+    email: 'foo@bar.com',
+    password: 'secret',
+    password_confirmation: 'secret')}
 
   describe '#has_card?' do
     subject { user }
@@ -23,27 +17,22 @@ describe User do
     end
 
     context "when user has no card" do
-      let(:user) { FactoryGirl.create(:user)}
 
       its(:has_card?) { should be_false }
     end
   end
 
   it "should generate password hash and salt on create" do
-    user = new_user
-    user.save!
     user.password_hash.should_not be_nil
     user.password_salt.should_not be_nil
   end
 
   it "should authenticate by username" do
-    user = new_user(:username => 'foobar', :password => 'secret')
     user.save!
     User.authenticate('foobar', 'secret').should == user
   end
 
   it "should authenticate by email" do
-    user = new_user(:email => 'foo@bar.com', :password => 'secret')
     user.save!
     User.authenticate('foo@bar.com', 'secret').should == user
   end
@@ -52,8 +41,23 @@ describe User do
     User.authenticate('nonexisting', 'secret').should be_nil
   end
 
-  it "should not authenticate bad password" do
-    new_user(:username => 'foobar', :password => 'secret').save!
-    User.authenticate('foobar', 'badpassword').should be_nil
+  context "when invalid password" do
+    let(:user) { FactoryGirl.create(:user, :username => 'foobar', :password => 'secret') }
+
+    it "should not authenticate" do
+      User.authenticate('foobar', 'badpassword').should be_nil
+    end
+  end
+
+  context "with stripe_errors" do
+    before do
+      user.stripe_error = "Invalid card sucker"
+    end
+    its(:valid?) { should be_false }
+
+    it "has the right error" do 
+      user.save
+      user.errors.messages[:base].should include('Invalid card sucker')
+    end
   end
 end

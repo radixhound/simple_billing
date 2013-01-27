@@ -22,3 +22,12 @@ Feature: Signup users
         Then I should be on the user page for "Bob"
         And I should see "Signup successful"
         And the user should see his card information
+
+    @javascript
+    Scenario: user activates their account with an invalid card
+        When I visit the activation page for "Bob"
+        And I enter invalid billing information
+        And I fill in my password 
+        Then I should be on the activation page for "Bob"
+        And I should see "Your card was declined"
+

@@ -43,7 +43,9 @@ FactoryGirl.define do
         )
         UserActivator.new(
             user.signup_token, 
-            stripe_card_token: card_token.id 
+            stripe_card_token: card_token.id,
+            password: 'sample', 
+            password_confirmation: 'sample'
           ).activate
       end
 

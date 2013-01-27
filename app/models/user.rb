@@ -17,6 +17,12 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password
   validates_length_of :password, :minimum => 4, :allow_blank => true
 
+  validate :no_stripe_errors
+
+  def no_stripe_errors
+    errors[:base] << @stripe_error if @stripe_error
+  end
+
   def self.admins
     where(admin: true)
   end
@@ -25,6 +31,10 @@ class User < ActiveRecord::Base
     where(admin: false)
   end
   
+  def stripe_error=(error)
+    @stripe_error = error
+  end
+
   # login can be either username or email address
   def self.authenticate(login, pass)
     return false if pass.blank?

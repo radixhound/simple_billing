@@ -22,6 +22,7 @@ class UserActivator
       :email => "#{@user.email}", 
       :card => card_token )
     response.id
+  rescue Stripe::CardError => e
+    @user.stripe_error = e.message
   end
-
 end

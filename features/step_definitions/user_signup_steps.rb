@@ -19,6 +19,13 @@ When /^I enter my billing information$/ do
   select('2014', :from => 'card_year')
 end
 
+When /^I enter invalid billing information$/ do
+  fill_in('card_number', with: '42424242424242')
+  fill_in('card_code', with: '122')
+  select('1 - January', :from => 'card_month')
+  select('2014', :from => 'card_year')
+end
+
 Then /^the user should see his card information$/ do
   within('.card_info') {
     find('.card_digits').should have_content('4242')
@@ -27,3 +34,8 @@ Then /^the user should see his card information$/ do
   }
 end
 
+Then /^I should be on the activation page for "(.*?)"$/ do |arg1|
+  retry_on_timeout(3) do
+    find("h1.main_title").should have_content("Activate Account")
+  end
+end
