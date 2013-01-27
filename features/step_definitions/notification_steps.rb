@@ -9,6 +9,12 @@ Then /^an invoice notification( with activation link |\s)is sent to "(.*?)"$/ do
   @email.body.should include(invoice.amount)
 end
 
-# Then /^an invoice notification is sent to "(.*?)"$/ do |user_name|
-#   pending # express the regexp above with the code you wish you had
-# end
+Then /^I should receive payment confirmation email$/ do
+  @email = ActionMailer::Base.deliveries.first
+  @email.should be
+  invoice = @user.invoices.first
+  @email.to[0].should == @user.email
+  @email.subject.should include("Payment Confirmation")
+  @email.body.should include(invoice.title)
+  @email.body.should include(invoice.amount)
+end

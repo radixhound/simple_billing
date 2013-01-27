@@ -15,6 +15,7 @@ class PaymentProcessor
         description: invoice_description )
 
       @invoice.update_attribute(:paid, true)
+      UserMailer.payment_confirmation(@invoice).deliver
     rescue Stripe::CardError => e
       @reason_message = e.message
       false

@@ -14,6 +14,7 @@ Feature: Bill payment
     When I open the invoice for "Potatoes"
     And I make a payment
     Then the invoice for "Potatoes" should be marked as paid
+    And I should receive payment confirmation email
 
   Scenario: Fail to pay my bill
     Given I have an card that will be declined

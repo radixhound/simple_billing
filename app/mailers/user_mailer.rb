@@ -19,4 +19,11 @@ class UserMailer < ActionMailer::Base
     mail(:to => @user.email, :subject => "You have a new invoice")
   end
 
+  def payment_confirmation(invoice)
+    @invoice = invoice
+    @user = @invoice.user
+    @url  = user_invoice_url(@user.id, @invoice.id)
+    mail(:to => @user.email, :subject => "Payment Confirmation")
+  end
+
 end
