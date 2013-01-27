@@ -5,11 +5,12 @@ Feature: Edit user
 
     Background:
         Given I am logged in as an admin user
-        And there is a user "BobMarley"
+        And there is a pending user "BobMarley"
 
-    Scenario: Destroy a user
+    Scenario: Edit a user
         When I edit the user "BobMarley" to have:
             | username | RobertMarley |
             | email    | rob@example.com |
+
         Then I should see "RobertMarley" on the Admin Dashboard
         And I should see "rob@example.com" on the Admin Dashboard

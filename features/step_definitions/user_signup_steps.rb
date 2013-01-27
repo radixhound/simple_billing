@@ -1,5 +1,5 @@
 Given /^there is a pending user "(.*?)"$/ do |user_name|
-  FactoryGirl.create(:pending_user, username: user_name)
+  @user = FactoryGirl.create(:pending_user, username: user_name)
 end
 
 When /^I visit the activation page for "(.*?)"$/ do |user_name|

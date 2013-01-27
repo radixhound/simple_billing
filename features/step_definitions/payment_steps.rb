@@ -59,6 +59,8 @@ def activate_user(user, card_token)
   @user.save
   UserActivator.new(
       @user.signup_token, 
-      stripe_card_token: card_token
+      stripe_card_token: card_token,
+      password: '123456',
+      password_confirmation: '123456'
     ).activate
 end
