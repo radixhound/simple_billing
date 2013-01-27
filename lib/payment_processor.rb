@@ -7,17 +7,10 @@ class PaymentProcessor
   end
 
   def process
-    begin
-      Stripe::Charge.create(
-        amount: (invoice.amount * 100).to_i,
-        currency: CURRENCIES[:canadian],
-        customer: invoice.user.stripe_user_id,
-        description: invoice_description )
-
-      @invoice.update_attribute(:paid, true)
+    if charge = create_charge
+      @invoice.update_attributes(paid: true, charge_id: charge.id)
       UserMailer.payment_confirmation(@invoice).deliver
-    rescue Stripe::CardError => e
-      @reason_message = e.message
+    else
       false
     end
   end
@@ -27,6 +20,17 @@ class PaymentProcessor
   end
 
   private
+
+  def create_charge
+    Stripe::Charge.create(
+        amount: (invoice.amount * 100).to_i,
+        currency: CURRENCIES[:canadian],
+        customer: invoice.user.stripe_user_id,
+        description: invoice_description )
+    rescue Stripe::CardError => e
+      @reason_message = e.message
+      false
+  end
 
   def invoice
     @invoice

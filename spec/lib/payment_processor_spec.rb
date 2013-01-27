@@ -20,6 +20,11 @@ describe PaymentProcessor do
         invoice.paid.should be_true
       end
 
+      it "assigns a charge_id to the invoice" do
+        processor.process
+        invoice.charge_id.should == '1234'
+      end
+
       it "sends the charge to stripe" do
         Stripe::Charge.expects(:create).
           with( amount: (invoice.amount * 100).to_i,
