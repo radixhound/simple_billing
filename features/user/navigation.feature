@@ -21,3 +21,12 @@ Feature: User navigation
       When I open the invoice for "Potatoes"
       And I click the back button
       Then I should be on my user page
+
+    Scenario: Visiting homepage when logged in
+      Given I am logged in as a user "Bob"
+      When I visit the homepage
+      Then I should be on my user page
+
+    Scenario: Visiting homepage when not logged in
+      When I visit the homepage
+      Then I should be on the login page
